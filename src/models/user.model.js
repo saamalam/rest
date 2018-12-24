@@ -10,27 +10,18 @@ const roles = [
 ]
 
 const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 4,
-    maxlength: 128
-  },
-  name: {
-    type: String,
-    maxlength: 50
-  },
-  role: {
-    type: String,
-    default: 'user',
-    enum: roles
-  }
+  email: {type: String, required: true, unique: true, lowercase: true},
+  username: {type: String, required: true, unique: true, lowercase: true, minlength: 6, maxlength: 64},
+  password: {type: String, required: true, minlength: 4, maxlength: 128},
+  name: {type: String, required: true, maxlength: 64},
+  gender: {type: String, default: 'Others', enum: ['Male', 'Female', 'Others']},
+  avatar: {data: Buffer, contentType: String},
+  follow: [{type: Schema.Types.ObjectId, ref: 'Business'}],
+  review: [{type: Schema.Types.ObjectId, refPath: 'Review'}],
+  onModel: {type: String, enum: ['BlogPost', 'Product']},
+  following: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  followers: [{type: Schema.Types.ObjectId, ref: 'User'}],
+  role: {type: String, default: 'user', enum: roles}
 }, {
   timestamps: true
 })
